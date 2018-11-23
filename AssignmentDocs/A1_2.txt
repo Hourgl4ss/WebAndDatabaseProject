@@ -1,0 +1,38 @@
+Request:
+PUT /put HTTP/1.1
+host: httpbin.org
+content-type: text/plain
+content-length: 5
+
+yeeeet
+
+
+Response:
+
+HTTP/1.1 200 OK
+Connection: keep-alive
+Server: gunicorn/19.9.0
+Date: Wed, 21 Nov 2018 10:43:59 GMT
+Content-Type: application/json
+Content-Length: 289
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+Via: 1.1 vegur
+
+{
+  "args": {}, 
+  "data": "yeeee", 
+  "files": {}, 
+  "form": {}, 
+  "headers": {
+    "Connection": "close", 
+    "Content-Length": "5", 
+    "Content-Type": "text/plain", 
+    "Host": "httpbin.org"
+  }, 
+  "json": null, 
+  "origin": "145.94.221.57", 
+  "url": "http://httpbin.org/put"
+}
+
+The server stops reading the message after it's reached the point where it thinks there is no more characters to be read because of the content-length header

@@ -1,0 +1,55 @@
+3.1) Loggin in logs you in and displays a succes message.
+3.2) 
+Request:
+HEAD /basic-auth/user/passwd HTTP/1.1
+host:httpbin.org
+
+Response:
+HTTP/1.1 401 UNAUTHORIZED
+Connection: keep-alive
+Server: gunicorn/19.9.0
+Date: Wed, 21 Nov 2018 11:06:24 GMT
+Www-Authenticate: Basic realm="Fake Realm"
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+Content-Length: 0
+Via: 1.1 vegur
+
+Request:
+HEAD /basic-auth/user/passwd HTTP/1.1
+host:httpbin.org
+authorization: Basic dXNlcjpwYXNzd2Q=
+
+Response:
+HTTP/1.1 200 OK
+Connection: keep-alive
+Server: gunicorn/19.9.0
+Date: Wed, 21 Nov 2018 11:09:41 GMT
+Content-Type: application/json
+Content-Length: 47
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+Via: 1.1 vegur
+
+Request:
+GET /basic-auth/user/passwd HTTP/1.1
+host:httpbin.org
+authorization: Basic dXNlcjpwYXNzd2Q=
+
+Response:
+HTTP/1.1 200 OK
+Connection: keep-alive
+Server: gunicorn/19.9.0
+Date: Wed, 21 Nov 2018 11:10:16 GMT
+Content-Type: application/json
+Content-Length: 47
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+Via: 1.1 vegur
+
+{
+  "authenticated": true, 
+  "user": "user"
+}
+
+The page goes back to being inaccessable without the username and password when the TCP connection is closed and re-opened.
