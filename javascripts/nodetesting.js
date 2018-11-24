@@ -1,18 +1,17 @@
-var fs = require('fs');
-var net = require('net');
+var http = require("http");
+var url = require("url");
+var express = require("express");
+var port = process.argv[2];
+var app = express();
 
-var file = process.argv[2];
+var onConnectFun = function(request, response){
 
-var server = net.createServer(function(connection){
+    var parsedUrl = url.parse(request.url, true);
 
-    connection.write("Yayeet");
 
-    connection.on('close', function () {
-        console.log("Subscriber disconnected");
-        watcher.close();
-    });
-});
+    response.writeHead(200, {"Content-type": "text/plain"});
+    response.end("Hello world!");
+    console.log("HTTP request 200 ok sent");
+}
 
-server.listen(3000, function(){
-    console.log("Listening for connections...");
-});
+http.createServer(app).listen(port);
