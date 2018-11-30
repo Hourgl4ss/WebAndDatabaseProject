@@ -1,0 +1,15 @@
+As seen on the gamescreen.png there a a number of clickable elements on the game.html screen.
+    - The help button
+    - The seven color picker circles at the side of the playfield
+    - The four circles currently in use for guessing the code
+
+The help button will pop up a little gray screen with some text and an 'OK' or 'Continue' button and maybe some arrows 
+to navigate the help menu if we have too much text to eplain the game.
+
+The seven color picker/remover buttons will change the cursor into the circle that the user picks, in the case of the circle
+with the cross in it, it will return the cursor to default and remove the selected color.
+
+After clicking on one of the four currently in-use guessing slots the color of the selected circle will change into the color
+of the current cursor, if the default cursor in in use the sidebar with the color pickers glows up briefly to indicate that
+a color should be selected first.
+
