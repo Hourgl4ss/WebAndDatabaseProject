@@ -1,0 +1,67 @@
+body {
+    padding: 0px;
+    margin: 0%;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    overflow: hidden; 
+    border: 0;
+  }
+
+  main {
+    padding: 0%;
+    margin: 0%;
+    border: 0;
+    background-color: gainsboro;
+  }
+
+  .playfieldContainer{
+    height: 100%;
+    margin-left: 10%;
+    width: 80%;
+    display: inline-block;
+    background-color: gainsboro;
+  }
+
+  .scores{
+    height: 30%;
+    float: left;
+    width: 25%;
+    display: inline-block;
+    background-color: cornflowerblue;
+  }
+
+  .playField{
+    height: 100%;
+    width: 50%;
+    float: left;
+    display: inline-block;
+    background-color: rgb(136, 136, 136);
+  }
+
+  .colorPicker{
+    width: 8%;
+    height: 90%;
+    margin-top: 10%;
+    float: left;
+    display: inline-block;
+    background-color: grey;
+  }
+
+  .helpButtonContainer{
+    width: 30%;
+    height: 90%;
+    display: inline-block;
+    background-color: gainsboro;
+    position: absolute;
+  }
+
+  .helpButton {
+    margin-top: 5%;
+    width: auto;
+    height: auto;
+    background-color: gainsboro;
+  }
+
+  a {
+    color: #00B7FF;
+  }
+  
