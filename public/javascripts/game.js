@@ -1,7 +1,6 @@
 var main = function(){
     gameOne = new game(1, true);
     initialiseButtonActions(gameOne);
-    
 }
 
 var game = function(gameId, allowDupes){
@@ -10,6 +9,20 @@ var game = function(gameId, allowDupes){
     this.filledCircleCounter = 0;
     this.id = gameId;
     this.duplicatesAllowed = allowDupes;
+    this.showActiveGuessField(9);
+}
+
+game.prototype.isGameFinished = function(){
+    return this.guessingRowNumber <= 0;
+}
+
+game.prototype.endGameInstance = function(){
+    //@TODO end the game on this function call
+}
+
+game.prototype.showActiveGuessField = function(row){
+    $("#r"+(row+1)).css("background-color", "rgb(136, 136, 136)");
+    $("#r"+row).css("background-color", "lightblue");
 }
 
 var initialiseButtonActions = function(gameInstance){
@@ -28,24 +41,33 @@ var initialiseButtonActions = function(gameInstance){
     //On click of guessing type button, change its color to cursor color
     $(".guessButton").click(function(){
         if($(this).parent().attr("id") === "r"+gameInstance.guessingRowNumber){
+
             if(!(gameInstance.cursorState === "default")){
+
                 if($(this).attr("src") === "../images/emptyCircle.png") gameInstance.filledCircleCounter += 1;
                 $(this).attr("src", "../images/" +gameInstance.cursorState+ ".png");
-            } else{
+            } else {
+
                 if(!($(this).attr("src") === "../images/emptyCircle.png")) gameInstance.filledCircleCounter -= 1;
                 $(this).attr("src", "../images/emptyCircle.png");
             }
         } else {
-            //@TODO: Row glows up red and the currently active row glows white
+            //@TODO Row glows up red and the currently active row glows white
         }
     });
 
     //On submitting using the submit button the callback executes and does a few things further comments below
-    $(".submitButton").click(function(){
+    $("#submitButton").click(function(){
+
         //Check if all four slots in this row are filled and if duplicates are allowed and present
-        if(gameInstance.duplicatesAllowed && gameInstance.filledCircleCounter>3){
+        if(gameInstance.duplicatesAllowed && (gameInstance.filledCircleCounter >= 4)){
             gameInstance.guessingRowNumber -= 1;
             gameInstance.filledCircleCounter = 0;
+
+            if(gameInstance.isGameFinished()) endGameInstance();
+
+            gameInstance.showActiveGuessField(gameInstance.guessingRowNumber);
+
         } else if(false){
 
         } else {
