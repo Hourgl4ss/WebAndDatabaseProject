@@ -1,5 +1,6 @@
 var main = function(){
-    gameOne = new game(1, true);
+    gameOne = new game(1, false);
+
     initialiseButtonActions(gameOne);
 }
 
@@ -10,6 +11,9 @@ var game = function(gameId, allowDupes){
     this.filledCircleCounter = 0;
     this.id = gameId;
     this.duplicatesAllowed = allowDupes;
+
+    this.masterCode = new Array();
+
     this.showActiveGuessField(9);
 }
 
@@ -21,6 +25,37 @@ game.prototype.isGameFinished = function(){
 //Ends the game and returns players to the splash screen
 game.prototype.endGameInstance = function(){
     //@TODO end the game on this function call
+}
+
+//checks if this round's guess was the correct one
+game.prototype.correctGuess = function(){
+    let tempCodeArray = new Array();
+
+    $("#r"+this.guessingRowNumber).children("input").each(function(){
+        tempSourceContainer.push($(this).attr("src"));
+    });
+
+    return this.masterCode === tempCodeArray;
+}
+
+//Animate the active row to indicate something needs attention
+game.prototype.flickerActiveGuessRow = function(){
+    $("#r"+this.guessingRowNumber).animate({opacity: '0.6'}, 100);
+    $("#r"+this.guessingRowNumber).animate({opacity: '1'}, 100);
+    $("#r"+this.guessingRowNumber).animate({opacity: '0.6'}, 100);
+    $("#r"+this.guessingRowNumber).animate({opacity: '1'}, 100);
+}
+
+//
+game.prototype.nextRound = function(){
+    //update game variables and give visual queues
+    this.guessingRowNumber -= 1;
+    this.filledCircleCounter = 0;
+
+    if(this.isGameFinished()) this.endGameInstance();
+
+    //update the active row indication
+    this.showActiveGuessField(this.guessingRowNumber);
 }
 
 //Show/update the currently active row of guessing circles -- visual only
@@ -60,13 +95,8 @@ var initialiseButtonActions = function(gameInstance){
                 $(this).attr("src", "../images/emptyCircle.png");
             }
         } else {
-
-            console.log("else works for animate");
             //@TODO Row glows up red and the currently active row glows white
-            $("#r"+gameInstance.guessingRowNumber).animate({
-                backgroundColor : "rgb(173, 173, 173);"
-            }, 7000);
-
+            gameInstance.flickerActiveGuessRow();
         }
     });
 
@@ -75,18 +105,37 @@ var initialiseButtonActions = function(gameInstance){
 
         //Check if all four slots in this row are filled and if duplicates are allowed and present
         if(gameInstance.duplicatesAllowed && (gameInstance.filledCircleCounter >= 4)){
-            gameInstance.guessingRowNumber -= 1;
-            gameInstance.filledCircleCounter = 0;
 
-            if(gameInstance.isGameFinished()) endGameInstance();
+            //Move on to the next round if game is not yet over
+            if(!(gameInstance.correctGuess())) gameInstance.nextRound();
 
-            //update the active row indication
-            gameInstance.showActiveGuessField(gameInstance.guessingRowNumber);
+        } else if(gameInstance.filledCircleCounter >= 4){
 
-        } else if(false){
+            //for each child of the active guessing row, put their source in an array
+            let tempSourceContainer = new Array();
+            $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
+                tempSourceContainer.push($(this).attr("src"));
+            });
+
+            //Check if the array contains duplicates
+            let tempSourceSet = new Set(tempSourceContainer);
+            if(tempSourceSet.size == tempSourceContainer.length){
+
+                //If no duplicate exist, move on to the next guessing round
+                gameInstance.nextRound();
+
+            } else {
+
+                //Duplicates exist but they are disabled, show this to the player
+                gameInstance.flickerActiveGuessRow();
+                window.alert("Duplicate colors are disabled!");
+            }
 
         } else {
-
+            
+            //Something in the user's input is off, let them re-enter something
+            gameInstance.flickerActiveGuessRow();
+            window.alert("Please try to make an accurate guess!");
         }
     });
 }
