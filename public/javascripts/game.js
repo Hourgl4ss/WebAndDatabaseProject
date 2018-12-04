@@ -3,6 +3,7 @@ var main = function(){
     initialiseButtonActions(gameOne);
 }
 
+//Basic constructor for the game object
 var game = function(gameId, allowDupes){
     this.cursorState = "default";
     this.guessingRowNumber = 9;
@@ -12,27 +13,34 @@ var game = function(gameId, allowDupes){
     this.showActiveGuessField(9);
 }
 
+//Returns true if the game is finished
 game.prototype.isGameFinished = function(){
     return this.guessingRowNumber <= 0;
 }
 
+//Ends the game and returns players to the splash screen
 game.prototype.endGameInstance = function(){
     //@TODO end the game on this function call
 }
 
+//Show/update the currently active row of guessing circles -- visual only
 game.prototype.showActiveGuessField = function(row){
     $("#r"+(row+1)).css("background-color", "rgb(136, 136, 136)");
     $("#r"+row).css("background-color", "lightblue");
 }
 
+//Initialises all the button onclick eventlisteners
 var initialiseButtonActions = function(gameInstance){
 
     //On color selector button press, change cursor type to image corresponding to the color picked
     $(".pickerButton").click(function(){
+        //Update color if an actual color is selected
         if(!(this.id === "nocolor")){ 
             $('body').css('cursor', 'url(../images/' +this.id+ '.png), auto');
             gameInstance.cursorState = this.id;
-        } else{
+
+        //Return to default if nocolor was selected
+        } else {
             $('body').css('cursor', 'default');
             gameInstance.cursorState = "default";
         } 
@@ -52,7 +60,13 @@ var initialiseButtonActions = function(gameInstance){
                 $(this).attr("src", "../images/emptyCircle.png");
             }
         } else {
+
+            console.log("else works for animate");
             //@TODO Row glows up red and the currently active row glows white
+            $("#r"+gameInstance.guessingRowNumber).animate({
+                backgroundColor : "rgb(173, 173, 173);"
+            }, 7000);
+
         }
     });
 
@@ -66,6 +80,7 @@ var initialiseButtonActions = function(gameInstance){
 
             if(gameInstance.isGameFinished()) endGameInstance();
 
+            //update the active row indication
             gameInstance.showActiveGuessField(gameInstance.guessingRowNumber);
 
         } else if(false){
