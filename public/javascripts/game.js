@@ -27,6 +27,17 @@ game.prototype.endGameInstance = function(){
     //@TODO end the game on this function call
 }
 
+
+//Asks a code to one of the players playing
+game.prototype.askCode = function(player){
+    //@TODO inplement the function
+}
+
+//Sets the code to be guessed for the game
+game.prototype.setCode = function(inputCode){
+    this.masterCode = inputCode;
+}
+
 //checks if this round's guess was the correct one
 game.prototype.correctGuess = function(){
     let tempCodeArray = new Array();
@@ -71,7 +82,7 @@ var initialiseButtonActions = function(gameInstance){
     $(".pickerButton").click(function(){
         //Update color if an actual color is selected
         if(!(this.id === "nocolor")){ 
-            $('body').css('cursor', 'url(../images/' +this.id+ '.png), auto');
+            $('body').css('cursor', 'url(./images/' +this.id+ '.png), auto');
             gameInstance.cursorState = this.id;
 
         //Return to default if nocolor was selected
@@ -87,12 +98,12 @@ var initialiseButtonActions = function(gameInstance){
 
             if(!(gameInstance.cursorState === "default")){
 
-                if($(this).attr("src") === "../images/emptyCircle.png") gameInstance.filledCircleCounter += 1;
-                $(this).attr("src", "../images/" +gameInstance.cursorState+ ".png");
+                if($(this).attr("src") === "./images/emptyCircle.png") gameInstance.filledCircleCounter += 1;
+                $(this).attr("src", "./images/" +gameInstance.cursorState+ ".png");
             } else {
 
-                if(!($(this).attr("src") === "../images/emptyCircle.png")) gameInstance.filledCircleCounter -= 1;
-                $(this).attr("src", "../images/emptyCircle.png");
+                if(!($(this).attr("src") === "./images/emptyCircle.png")) gameInstance.filledCircleCounter -= 1;
+                $(this).attr("src", "./images/emptyCircle.png");
             }
         } else {
             //@TODO Row glows up red and the currently active row glows white

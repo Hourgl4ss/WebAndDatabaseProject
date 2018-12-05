@@ -1,0 +1,108 @@
+<DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MASTERMIND - In Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="./stylesheets/game.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./javascripts/game.js"></script>
+</head>
+<body>
+    <main>
+        <div class="playFieldContainer">
+            <div class="scores">
+                <p>
+                    <b>Score</b><br/>
+                    You: <span class="playerScoreIndicator"></span><br/> 
+                    Them: <span class="enemyScoreIndicator"></span>
+                </p>
+            </div>
+            <div class="playField">
+                <div id="codeRow">
+                    <img src="./images/emptyCircleQuestionmark.png"/>
+                    <img src="./images/emptyCircleQuestionmark.png"/>
+                    <img src="./images/emptyCircleQuestionmark.png"/>
+                    <img src="./images/emptyCircleQuestionmark.png"/>
+                </div>
+                <div class="guessRow" id="r1">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r2">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r2">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r3">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r4">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r5">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r6">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r7">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r8">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <div class="guessRow" id="r9">
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                    <input class="guessButton" type="image" src="./images/emptyCircle.png"/>
+                </div>
+                <input id="submitButton" type="image" src="./images/submitButton.png">
+            </div>
+            <div class="colorPicker">
+                <input class="pickerButton" id="red" type="image" src="./images/red.png"/>
+                <input class="pickerButton" id="yellow" type="image" src="./images/yellow.png"/>
+                <input class="pickerButton" id="green" type="image" src="./images/green.png"/>
+                <input class="pickerButton" id="purple" type="image" src="./images/purple.png"/>
+                <input class="pickerButton" id="blue" type="image" src="./images/blue.png"/>
+                <input class="pickerButton" id="black" type="image" src="./images/black.png"/>
+                <input class="pickerButton" id="nocolor" type="image" src="./images/nocolors.png"/>
+            </div>
+        </div>
+        <div class="helpButtonContainer">
+            <div class= "helpButton">
+                <input type="image" src="./images/helpButtonImage.png"/>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
