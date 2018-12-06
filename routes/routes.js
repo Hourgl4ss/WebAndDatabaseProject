@@ -13,7 +13,6 @@ module.exports = function(app){
     });
 
     app.post("/game", function(req, res){
-        console.log(res);
         res.sendFile("game.html", {root: "./public"});
         //@TODO only move player here if they used the splash screen button
     });
