@@ -2,6 +2,9 @@ var localGame = function(){
     this.cursorState = "default";
     this.filledCircleCounter = 0;
     this.guessingRowNumber = 9;
+    this.codeSetAlready = false;
+
+    this.playerType = "";
     
     this.showActiveGuessField(9);
 }
@@ -19,6 +22,35 @@ localGame.prototype.showActiveGuessField = function(row){
     $("#r"+(row+1)).css("background-color", "rgb(136, 136, 136)");
     $("#r"+row).css("background-color", "lightblue");
 }
+
+localGame.prototype.askCode = function(){
+    window.alert("please enter the code in the top most row and hit submit!");
+}
+
+localGame.prototype.setModeGuesser = function(){
+    $("#guessRow").each("div").children("input").each(function(){
+        $(this).prop("disabled", false);
+    });
+
+    $("#codeRow").children("input").each(function(){
+        $(this).prop("disabled", true);
+    });
+
+    this.playerType = "GUESSER";
+}
+
+localGame.prototype.setModeCodemaker = function(){
+    $("#guessRow").each("div").children("input").each(function(){
+        $(this).prop("disabled", true);
+    });
+
+    $("#codeRow").children("input").each(function(){
+        $(this).prop("disabled", false);
+    });
+
+    this.playerType = "CODEMAKER";
+}
+
 
 
     // //update the active row indication

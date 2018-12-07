@@ -23,12 +23,14 @@ websocketServer.on("connection", function connection(ws){
     if(!currentlyWaiting){
 
         //Initiate new game because noone is waiting for another player to join
-        let tempGameName = new game(amtOfRunningGames, false);
+        var tempGameName = new game(amtOfRunningGames, false);
         tempGameName.addPlayer(ws, currentlyWaiting);
         gameList.push(tempGameName);
         currentlyWaiting = true;
 
-        ws.send("CODEMAKER");
+        let someofregerg = JSON.stringify({playertype: "CODEMAKER"});
+        console.log(someofregerg);
+        ws.send(someofregerg);
 
     } else {
         //Make player join an already waiting player
@@ -37,11 +39,16 @@ websocketServer.on("connection", function connection(ws){
         amtOfRunningGames += 1;
         currentlyWaiting = false;
 
-        ws.send("GUESSER");
+        let someofregerg = JSON.stringify({playertype: "GUESSER"});
+        console.log(someofregerg);
+        ws.send(someofregerg);
     }
 
     ws.on("message", function incoming(message) {
-        console.log(message);
+
+        //@TODO if player message is new mastercode and the connection is player1, set the mastercode for the game
+        //CONDITION: if mastercode.length === 0;
+        console.log(JSON.parse(message.data));
       });
     
 });

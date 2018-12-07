@@ -19,10 +19,10 @@ var initialiseButtonActions = function(gameInstance){
     });
 
     /**
-     *  On click of guessing type button, change its color to cursor color
+     *  On click of type button, change its color to cursor color
      */
-    $(".guessButton").click(function(){
-        if($(this).parent().attr("id") === "r"+gameInstance.guessingRowNumber){
+    var buttonChangesColor = function(){
+        if($(this).parent().attr("id") === "r"+gameInstance.guessingRowNumber || $(this).parent().attr("id") === "codeRow"){
 
             if(!(gameInstance.cursorState === "default")){
 
@@ -34,55 +34,47 @@ var initialiseButtonActions = function(gameInstance){
                 $(this).attr("src", "./images/emptyCircle.png");
             }
         } else {
+            //Check if were inserting a new mastercode
             //@TODO Row glows up red and the currently active row glows white
             gameInstance.flickerActiveGuessRow();
         }
+    }
+    
+    
+    $(".guessButton").click(buttonChangesColor);
+    
+    $("#codeRow").children("input").each(function(){
+        $(this).prop("disabled", true);
+        $(this).click(buttonChangesColor);
     });
+
+    
 
     //On submitting using the submit button the callback executes and does a few things further comments below
     $("#submitButton").click(function(){
 
-        let tempColorsContainer = new Array();
-        $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
-            tempColorsContainer.push($(this).attr("src"));
-        });
 
-        //@TODO make this work ! ^^
-        socketConnection.send(Array.toString() + Date.now());
+        if(gameInstance.playerType === "CODEMAKER" && !gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
+            
+            let tempColorsContainer = new Array();
 
-        //Check if all four slots in this row are filled and if duplicates are allowed and present
-        if(gameInstance.duplicatesAllowed && (gameInstance.filledCircleCounter >= 4)){
-
-            //Move on to the next round if game is not yet over
-            if(!(gameInstance.correctGuess())) gameInstance.nextRound();
-
-        } else if(gameInstance.filledCircleCounter >= 4){
-
-            //for each child of the active guessing row, put their source in an array
-            let tempSourceContainer = new Array();
             $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
-                tempSourceContainer.push($(this).attr("src"));
+                tempColorsContainer.push($(this).attr("src"));
             });
 
-            //Check if the array contains duplicates
-            let tempSourceSet = new Set(tempSourceContainer);
-            if(tempSourceSet.size == tempSourceContainer.length){
+            //@TODO make this work ! ^^
+            socketConnection.send(JSON.stringify(tempColorsContainer));
 
-                //If no duplicate exist, move on to the next guessing round
-                gameInstance.nextRound();
-
-            } else {
-
-                //Duplicates exist but they are disabled, show this to the player
-                gameInstance.flickerActiveGuessRow();
-                window.alert("Duplicate colors are disabled!");
-            }
-
-        } else {
+            gameInstance.codeSetAlready = true;
+        } else if(gameInstance.playerType === "GUESSER" && !gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
             
-            //Something in the user's input is off, let them re-enter something
-            gameInstance.flickerActiveGuessRow();
-            window.alert("Please try to make an accurate guess!");
-        }
+
+        } else if(gameInstance.codeSetAlready){
+            window.alert("You can only submit one code");
+
+        } else if(!(gameInstance.filledCircleCounter >= 4)){
+            window.alert("Please fill in all four circles for the code");
+
+        } 
     });
 }

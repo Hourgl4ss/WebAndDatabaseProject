@@ -8,8 +8,6 @@ var game = function(gameId, allowDupes){
     this.player2 = null;
 
     this.masterCode = new Array();
-    
-    //this.showActiveGuessField(9);
 }
 
 //Returns true if the game is finished
@@ -60,6 +58,49 @@ game.prototype.nextRound = function(){
 
     if(this.isGameFinished()) this.endGameInstance();
 
+}
+
+
+/** !!!!!!
+ * This is code taken from the old game object on the client side app
+ * it might be useful for later so i'll keep it here for now
+ *  !!!!!!
+ */
+tempfuncstore = function(){
+    //Check if all four slots in this row are filled and if duplicates are allowed and present
+    if(gameInstance.duplicatesAllowed && (gameInstance.filledCircleCounter >= 4)){
+
+        //Move on to the next round if game is not yet over
+        if(!(gameInstance.correctGuess())) gameInstance.nextRound();
+
+    } else if(gameInstance.filledCircleCounter >= 4){
+
+        //for each child of the active guessing row, put their source in an array
+        let tempSourceContainer = new Array();
+        $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
+            tempSourceContainer.push($(this).attr("src"));
+        });
+
+        //Check if the array contains duplicates
+        let tempSourceSet = new Set(tempSourceContainer);
+        if(tempSourceSet.size == tempSourceContainer.length){
+
+            //If no duplicate exist, move on to the next guessing round
+            gameInstance.nextRound();
+
+        } else {
+
+            //Duplicates exist but they are disabled, show this to the player
+            gameInstance.flickerActiveGuessRow();
+            window.alert("Duplicate colors are disabled!");
+        }
+
+    } else {
+        
+        //Something in the user's input is off, let them re-enter something
+        gameInstance.flickerActiveGuessRow();
+        window.alert("Please try to make an accurate guess!");
+    }
 }
 
 module.exports = game;
