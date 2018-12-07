@@ -29,7 +29,6 @@ websocketServer.on("connection", function connection(ws){
         currentlyWaiting = true;
 
         let someofregerg = JSON.stringify({playertype: "CODEMAKER"});
-        console.log(someofregerg);
         ws.send(someofregerg);
 
     } else {
@@ -39,16 +38,23 @@ websocketServer.on("connection", function connection(ws){
         amtOfRunningGames += 1;
         currentlyWaiting = false;
 
-        let someofregerg = JSON.stringify({playertype: "GUESSER"});
-        console.log(someofregerg);
-        ws.send(someofregerg);
+        ws.send(JSON.stringify({playertype: "GUESSER"}));
     }
 
     ws.on("message", function incoming(message) {
 
         //@TODO if player message is new mastercode and the connection is player1, set the mastercode for the game
         //CONDITION: if mastercode.length === 0;
-        console.log(JSON.parse(message.data));
+        try{
+            //let something = JSON.parse(message.data);
+            console.log(message);
+            x = message;
+            console.log(x[0]);
+        } catch(exception){
+            console.log("Message received not corresponding to any standard messages");
+            console.log(exception.message);
+        }
+        
       });
     
 });

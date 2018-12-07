@@ -28,7 +28,7 @@ localGame.prototype.askCode = function(){
 }
 
 localGame.prototype.setModeGuesser = function(){
-    $("#guessRow").each("div").children("input").each(function(){
+    $(".guessButton").each(function(){
         $(this).prop("disabled", false);
     });
 
@@ -40,7 +40,7 @@ localGame.prototype.setModeGuesser = function(){
 }
 
 localGame.prototype.setModeCodemaker = function(){
-    $("#guessRow").each("div").children("input").each(function(){
+    $(".guessButton").each(function(){
         $(this).prop("disabled", true);
     });
 

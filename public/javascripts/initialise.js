@@ -1,7 +1,10 @@
 var socketConnection = new WebSocket("ws://localhost:3000");
 
+var localGame1 = new localGame();
+initialiseButtonActions(localGame1);
+localGame1.showActiveGuessField();
+
 socketConnection.onopen = function(event){
-    socketConnection.send("hellloooo");
 }
 
 //Executes on message received from websocket connection
@@ -23,13 +26,17 @@ socketConnection.onmessage = function(event){
         localGame1.setModeGuesser();
     }
 
+    if(receivedMessage.statusMessage === "WRONG_SUBMIT_CODEMAKER"){
+        //@TODO finish this expression
+
+        localGame1.codeSetAlready = false;
+    }
+
 
 };
 
 
 
 
-var localGame1 = new localGame();
-initialiseButtonActions(localGame1);
-localGame1.showActiveGuessField();
+
 

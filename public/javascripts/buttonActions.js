@@ -22,15 +22,17 @@ var initialiseButtonActions = function(gameInstance){
      *  On click of type button, change its color to cursor color
      */
     var buttonChangesColor = function(){
+        let thisImageSrc = $(this).attr("src");
+
         if($(this).parent().attr("id") === "r"+gameInstance.guessingRowNumber || $(this).parent().attr("id") === "codeRow"){
 
             if(!(gameInstance.cursorState === "default")){
 
-                if($(this).attr("src") === "./images/emptyCircle.png") gameInstance.filledCircleCounter += 1;
+                if(thisImageSrc === "./images/emptyCircle.png" || thisImageSrc === "./images/emptyCircleQuestionmark.png") gameInstance.filledCircleCounter += 1;
                 $(this).attr("src", "./images/" +gameInstance.cursorState+ ".png");
             } else {
 
-                if(!($(this).attr("src") === "./images/emptyCircle.png")) gameInstance.filledCircleCounter -= 1;
+                if(!(thisImageSrc === "./images/emptyCircle.png") && !(thisImageSrc === "./images/emptyCircleQuestionmark.png")) gameInstance.filledCircleCounter -= 1;
                 $(this).attr("src", "./images/emptyCircle.png");
             }
         } else {
@@ -53,25 +55,35 @@ var initialiseButtonActions = function(gameInstance){
     //On submitting using the submit button the callback executes and does a few things further comments below
     $("#submitButton").click(function(){
 
-
+        //Correct path for codemaker to submit the mastercode
         if(gameInstance.playerType === "CODEMAKER" && !gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
             
             let tempColorsContainer = new Array();
 
-            $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
+            $("#codeRow").children("input").each(function(){
                 tempColorsContainer.push($(this).attr("src"));
             });
 
+            let x = JSON.stringify();
+            
             //@TODO make this work ! ^^
-            socketConnection.send(JSON.stringify(tempColorsContainer));
+            socketConnection.send(JSON.stringify(x));
 
             gameInstance.codeSetAlready = true;
-        } else if(gameInstance.playerType === "GUESSER" && !gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
+        
+        //Correct path for the guesser to submit a guess
+        } else if(gameInstance.playerType === "GUESSER" && gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
             
 
-        } else if(gameInstance.codeSetAlready){
+        //Guesser guessed too early
+        } else if(gameInstance.playerType === "GUESSER" && !gameInstance.codeSetAlready){
+            window.alert("Please wait for the codemaker to make a move");
+
+        //Codemaker tried to submit another code
+        } else if(gameInstance.playerType === "CODEMAKER" && gameInstance.codeSetAlready){
             window.alert("You can only submit one code");
 
+        //Either the codemaker or guesser didn't fill all four circles before submitting
         } else if(!(gameInstance.filledCircleCounter >= 4)){
             window.alert("Please fill in all four circles for the code");
 
