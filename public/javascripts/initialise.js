@@ -25,6 +25,20 @@ socketConnection.onmessage = function(event){
     //If guesser, make ready to guess and wait for codemaker to submit
     if(receivedMessage.messageType === "GUESSER"){
         localGame1.setModeGuesser();
+        window.alert("Please wait for the codemaker to submit their code")
+    }
+
+    if(receivedMessage.messageType === ""){
+
+    }
+
+    //If an status update message is received
+    if(receivedMessage.messageType === "STATUS"){
+        
+        if(receivedMessage.statusUpdate === "CODE_SET"){
+            localGame1.codeSetAlready = true;
+            window.alert("The codemaker submitted their code, start guessing now!")
+        }
     }
 
     //Set up all the error messages tht the server could send
