@@ -49,6 +49,24 @@ game.prototype.correctGuess = function(){
     return this.masterCode === tempCodeArray;
 }
 
+game.prototype.checkSubmission = function(submission){
+    for(let i in submission){
+        switch(submission[i]){
+            case "./images/red.png": break;
+            case "./images/green.png": break;
+            case "./images/blue.png": break;
+            case "./images/black.png": break;
+            case "./images/yellow.png": break;
+            case "./images/purple.png": break;
+            case "./images/nocolors.png": return null;
+            case "./images/emptyCircle.png": return null;
+            case "./images/emptyCircleQuestionmark.png": return null;
+            default: return null;
+        }
+    }
+    return submission;
+}
+
 /**
  * Moves on to the next guessing round
  */

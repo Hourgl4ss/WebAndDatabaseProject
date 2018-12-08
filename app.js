@@ -28,8 +28,7 @@ websocketServer.on("connection", function connection(ws){
         gameList.push(tempGameName);
         currentlyWaiting = true;
 
-        let someofregerg = JSON.stringify({playertype: "CODEMAKER"});
-        ws.send(someofregerg);
+        ws.send(JSON.stringify({messageType: "CODEMAKER"}));
 
     } else {
         //Make player join an already waiting player
@@ -38,7 +37,7 @@ websocketServer.on("connection", function connection(ws){
         amtOfRunningGames += 1;
         currentlyWaiting = false;
 
-        ws.send(JSON.stringify({playertype: "GUESSER"}));
+        ws.send(JSON.stringify({messageType: "GUESSER"}));
     }
 
     ws.on("message", function incoming(message) {
@@ -46,17 +45,32 @@ websocketServer.on("connection", function connection(ws){
         //@TODO if player message is new mastercode and the connection is player1, set the mastercode for the game
         //CONDITION: if mastercode.length === 0;
         try{
-            //let something = JSON.parse(message.data);
-            console.log(message);
-            x = message;
-            console.log(x[0]);
+            //parse received data
+            let dataReceived = JSON.parse(message);
+
+            //If we received mastercode submission coming from the codemaker
+            if(dataReceived.submitType === "MASTERCODE" && tempGameName.player1 === ws){
+                //If the submission is valid and no other mastercode has been set yet, set mastercode as this submssion
+                if((tempGameName.checkSubmission(dataReceived.dataArray) !== null) && (tempGameName.masterCode.length === 0)){
+                    tempGameName.masterCode = dataReceived.dataArray;
+                
+                //If mastercode already exists, send error message to client
+                } else if(tempGameName.masterCode.length !== 0){
+                    ws.send(JSON.stringify({messageType: "ERROR", errorType: "ALREADY_SUBMITTED"}));
+                } else {
+                    //@TODO also add statement for when there arent enough entries in the array, so if .lenth returns 2 or less
+                    ws.send(JSON.stringify({messageType: "ERROR", errorType: "BAD_SUBMIT_OVERALL"}));
+                }
+            }
+
+
         } catch(exception){
             console.log("Message received not corresponding to any standard messages");
-            console.log(exception.message);
+            console.log(exception);
+            ws.send(JSON.stringify({messageType: "ERROR", errorType: "BAD_MESSAGE"}));
         }
         
       });
-    
 });
 
 server.listen(port);

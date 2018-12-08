@@ -58,16 +58,14 @@ var initialiseButtonActions = function(gameInstance){
         //Correct path for codemaker to submit the mastercode
         if(gameInstance.playerType === "CODEMAKER" && !gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
             
-            let tempColorsContainer = new Array();
+            var tempColorsContainer = new Array();
 
             $("#codeRow").children("input").each(function(){
                 tempColorsContainer.push($(this).attr("src"));
             });
-
-            let x = JSON.stringify();
             
             //@TODO make this work ! ^^
-            socketConnection.send(JSON.stringify(x));
+            socketConnection.send(JSON.stringify({submitType: "MASTERCODE", dataArray: tempColorsContainer}));
 
             gameInstance.codeSetAlready = true;
         
