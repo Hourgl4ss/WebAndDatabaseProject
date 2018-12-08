@@ -14,7 +14,7 @@ socketConnection.onmessage = function(event){
     let receivedMessage = JSON.parse(event.data);
     console.log(receivedMessage);
 
-    localGame1.playerType = receivedMessage.messageType;
+    //localGame1.playerType = receivedMessage.messageType;
 
     //If codemaker, make code xd
     if(receivedMessage.messageType === "CODEMAKER") {
@@ -37,7 +37,22 @@ socketConnection.onmessage = function(event){
         
         if(receivedMessage.statusUpdate === "CODE_SET"){
             localGame1.codeSetAlready = true;
-            window.alert("The codemaker submitted their code, start guessing now!")
+
+            //Alert the guessing player
+            if(localGame1.playerType === "GUESSER") window.alert("The codemaker submitted their code, start guessing now!");
+        }
+
+        else if(receivedMessage.statusUpdate === "GUESS_CORRECT"){
+            localGame1.stopGame();
+        }
+
+        else if(receivedMessage.statusUpdate === "GUESS_INCORRECT"){
+            //@TODO: implement showing how many were right and how many were right in the right place
+            localGame1.nextRound();
+        }
+
+        else if(receivedMessage.statusUpdate === "GAME_END"){
+            localGame1.stopGame();
         }
     }
 

@@ -80,7 +80,30 @@ websocketServer.on("connection", function connection(ws){
 
             //If the server received a code guess from the guesser
             if(dataReceived.submitType === "CODE_GUESS" && tempGameName.player2 === ws){
-                
+
+                //First check the validity of the move
+                if(tempGameName.checkSubmission(dataReceived.dataArray) !== null){
+
+                    //If the guess was accurate
+                    if(tempGameName.correctGuess(dataReceived.dataArray)){
+                        ws.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_CORRECT"}));
+                        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_CORRECT"}));
+
+                        tempGameName.endGameInstance();
+
+                    //If guess waasnt quite correct, move on to the next round
+                    } else {
+                        tempGameName.nextRound();
+
+                        //something = evaluateGuess(dataReceived.dataArray);
+
+                        //@TODO implement 
+                        ws.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_INCORRECT"}));
+                        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_INCORRECT"}));
+
+                        
+                    }
+                }
             }
 
         //Catch exception where the message received did not look like anything previously defined

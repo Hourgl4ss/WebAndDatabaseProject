@@ -17,6 +17,10 @@ localGame.prototype.flickerActiveGuessRow = function(){
     $("#r"+this.guessingRowNumber).animate({opacity: '1'}, 100);
 }
 
+localGame.prototype.nextRound = function(){
+    
+}
+
 //Show and update the currently active row of guessing circles -- visual only
 localGame.prototype.showActiveGuessField = function(row){
     $("#r"+(row+1)).css("background-color", "rgb(136, 136, 136)");
@@ -49,6 +53,10 @@ localGame.prototype.setModeCodemaker = function(){
     });
 
     this.playerType = "CODEMAKER";
+}
+
+localGame.prototype.stopGame = function(){
+    window.alert("Game ended");
 }
 
 

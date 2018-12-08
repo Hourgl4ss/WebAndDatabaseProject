@@ -2,6 +2,8 @@
 var game = function(gameId, allowDupes){
     this.id = gameId;
     this.duplicatesAllowed = allowDupes;
+
+    //Guessng row starts at 9 (the bottom) and moves towards 1 (the top row)
     this.guessingRowNumber = 9;
 
     this.player1 = null;
@@ -18,6 +20,16 @@ game.prototype.isGameFinished = function(){
 //Ends the game and returns players to the splash screen
 game.prototype.endGameInstance = function(){
     //@TODO end the game on this function call
+    try{
+        this.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GAME_END"}));
+        this.player2.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GAME_END"}));
+    } catch(exception){
+        console.log("\n----\t\nendGameInstance was called too early, players probably not connected yet\n----");
+        console.log(exception)
+    }
+
+
+    
 }
 
 game.prototype.addPlayer = function(playerSocketConnection, playerWaiting){
@@ -28,25 +40,17 @@ game.prototype.addPlayer = function(playerSocketConnection, playerWaiting){
     }
 }
 
-//Asks a code to one of the players playing
-game.prototype.askCode = function(player){
-    //@TODO inplement the function
-}
-
 //Sets the code to be guessed for the game
 game.prototype.setCode = function(inputCode){
     this.masterCode = inputCode;
 }
 
 //checks if this round's guess was the correct one
-game.prototype.correctGuess = function(){
-    let tempCodeArray = new Array();
-
-    $("#r"+this.guessingRowNumber).children("input").each(function(){
-        tempSourceContainer.push($(this).attr("src"));
-    });
-
-    return this.masterCode === tempCodeArray;
+game.prototype.correctGuess = function(guessedCodeArray){
+    for(let i in guessedCodeArray){
+        if(this.masterCode[i] != guessedCodeArray[i]) return false;
+    }
+    return true;
 }
 
 game.prototype.checkSubmission = function(submission){

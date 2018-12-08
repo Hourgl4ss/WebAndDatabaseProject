@@ -58,7 +58,7 @@ var initialiseButtonActions = function(gameInstance){
         //Correct path for codemaker to submit the mastercode
         if(gameInstance.playerType === "CODEMAKER" && !gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
             
-            var tempColorsContainer = new Array();
+            let tempColorsContainer = new Array();
 
             $("#codeRow").children("input").each(function(){
                 tempColorsContainer.push($(this).attr("src"));
@@ -71,7 +71,16 @@ var initialiseButtonActions = function(gameInstance){
         
         //Correct path for the guesser to submit a guess
         } else if(gameInstance.playerType === "GUESSER" && gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
+
+            let tempColorsContainer = new Array();
+
+            //push into the array
+            $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
+                tempColorsContainer.push($(this).attr("src"));
+            });
             
+            //@TODO make this work ! ^^
+            socketConnection.send(JSON.stringify({submitType: "CODE_GUESS", dataArray: tempColorsContainer}));
 
         //Guesser guessed too early
         } else if(gameInstance.playerType === "GUESSER" && !gameInstance.codeSetAlready){
