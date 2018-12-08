@@ -40,13 +40,28 @@ socketConnection.onmessage = function(event){
 
             //Alert the guessing player
             if(localGame1.playerType === "GUESSER") window.alert("The codemaker submitted their code, start guessing now!");
+
+            //Disables altering of the mastercode once it's been set on the server
+            if(localGame1.playerType === "CODEMAKER"){
+                $("#codeRow").children("input").each(function(){
+                    $(this).prop("disabled", true);
+                });
+            };
         }
 
         else if(receivedMessage.statusUpdate === "GUESS_CORRECT"){
+            //Update the view for the codemaker
+            if(localGame1.playerType === "CODEMAKER") localGame1.updateView(receivedMessage.guessedArray);
+
+            //end the game because the guesser won
             localGame1.stopGame();
         }
 
         else if(receivedMessage.statusUpdate === "GUESS_INCORRECT"){
+
+            //Update the view for the codemaker
+            if(localGame1.playerType === "CODEMAKER") localGame1.updateView(receivedMessage.guessedArray);
+
             //@TODO: implement showing how many were right and how many were right in the right place
             localGame1.nextRound();
         }

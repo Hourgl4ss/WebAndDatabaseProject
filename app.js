@@ -87,7 +87,9 @@ websocketServer.on("connection", function connection(ws){
                     //If the guess was accurate
                     if(tempGameName.correctGuess(dataReceived.dataArray)){
                         ws.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_CORRECT"}));
-                        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_CORRECT"}));
+
+                        //also send to codemaker, including the guessed code so their game can update locally
+                        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_CORRECT", guessedArray: dataReceived.dataArray}));
 
                         tempGameName.endGameInstance();
 
@@ -97,9 +99,11 @@ websocketServer.on("connection", function connection(ws){
 
                         //something = evaluateGuess(dataReceived.dataArray);
 
-                        //@TODO implement 
+                        //@TODO implement sending how many correct and or in the right place as well
                         ws.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_INCORRECT"}));
-                        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_INCORRECT"}));
+
+                        //also send to codemaker, including the guessed code so their game can update locally
+                        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_INCORRECT", guessedArray: dataReceived.dataArray}));
 
                         
                     }

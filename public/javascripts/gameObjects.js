@@ -18,7 +18,12 @@ localGame.prototype.flickerActiveGuessRow = function(){
 }
 
 localGame.prototype.nextRound = function(){
-    
+
+    this.guessingRowNumber -= 1;
+    this.showActiveGuessField(this.guessingRowNumber);
+
+    if(this.playerType === "GUESSER") window.alert("incorrect");
+
 }
 
 //Show and update the currently active row of guessing circles -- visual only
@@ -59,7 +64,13 @@ localGame.prototype.stopGame = function(){
     window.alert("Game ended");
 }
 
-
+localGame.prototype.updateView = function(guessedArray){
+    let i = 0;
+    $("#r"+this.guessingRowNumber).children("input").each(function(){
+        $(this).prop("src", guessedArray[i]);
+        i = i+1;
+    });
+}
 
     // //update the active row indication
     // this.showActiveGuessField(this.guessingRowNumber);

@@ -70,17 +70,23 @@ var initialiseButtonActions = function(gameInstance){
             gameInstance.codeSetAlready = true;
         
         //Correct path for the guesser to submit a guess
-        } else if(gameInstance.playerType === "GUESSER" && gameInstance.codeSetAlready && (gameInstance.filledCircleCounter >= 4)){
+        } else if(gameInstance.playerType === "GUESSER" && gameInstance.codeSetAlready){
 
-            let tempColorsContainer = new Array();
+            //check locally if all circles are filled (checked for again on server-side)
+            if(gameInstance.filledCircleCounter >= 4){
+                let tempColorsContainer = new Array();
 
-            //push into the array
-            $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
-                tempColorsContainer.push($(this).attr("src"));
-            });
+                //push into the array
+                $("#r"+gameInstance.guessingRowNumber).children("input").each(function(){
+                    tempColorsContainer.push($(this).attr("src"));
+                });
             
-            //@TODO make this work ! ^^
-            socketConnection.send(JSON.stringify({submitType: "CODE_GUESS", dataArray: tempColorsContainer}));
+                //Send the data to the server
+                socketConnection.send(JSON.stringify({submitType: "CODE_GUESS", dataArray: tempColorsContainer}));
+            } else {
+                window.alert("please fill in all the circles!");
+            }
+            
 
         //Guesser guessed too early
         } else if(gameInstance.playerType === "GUESSER" && !gameInstance.codeSetAlready){
