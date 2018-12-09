@@ -76,7 +76,8 @@ localGame.prototype.updateSmallCircles = function(correct, correctPlace){
     let x = correct,
         y = correctPlace;
 
-    $("#r"+this.guessingRowNumber).children(".rightGuesses").children().each(function(){
+    $("#r"+this.guessingRowNumber).children(".rightGuesses").children("div").each(function(){
+        $(this).css("background-color", "transparent");
         if(x > 0){
             $(this).css("background-color", "white");
             x--;
