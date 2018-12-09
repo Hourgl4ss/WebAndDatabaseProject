@@ -18,6 +18,7 @@ socketConnection.onmessage = function(event){
     if(receivedMessage.messageType === "CODEMAKER") {
         localGame1.setModeCodemaker();
         localGame1.askCode();
+        localGame1.setStatusMessage("Waiting for other player to connect");
     }
 
     //If guesser, make ready to guess and wait for codemaker to submit
@@ -48,13 +49,14 @@ socketConnection.onmessage = function(event){
             };
         }
 
+        if(receivedMessage.statusUpdate === "PLAYER_JOINED"){
+            localGame1.setStatusMessage("Player connected, waiting for moves");
+        }
+
         else if(receivedMessage.statusUpdate === "GUESS_CORRECT"){
+
             //Update the view for the codemaker
             if(localGame1.playerType === "CODEMAKER") localGame1.updateView(receivedMessage.guessedArray);
-
-            
-
-            //end the game because the guesser won
         }
 
         else if(receivedMessage.statusUpdate === "GUESS_INCORRECT"){
@@ -67,6 +69,11 @@ socketConnection.onmessage = function(event){
 
             //@TODO: implement showing how many were right and how many were right in the right place
             localGame1.nextRound();
+        }
+
+        else if(receivedMessage.statusUpdate === "PLAYER_DISCONNECT"){
+            window.alert("The other player disconnected");
+            localGame1.stopGame();
         }
 
         else if(receivedMessage.statusUpdate === "GAME_END"){

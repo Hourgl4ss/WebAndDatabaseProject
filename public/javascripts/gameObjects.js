@@ -88,5 +88,9 @@ localGame.prototype.updateSmallCircles = function(correct, correctPlace){
     });
 }
 
+localGame.prototype.setStatusMessage = function(message){
+    if(typeof message === 'string') $("#statusMessage").append("<br/>" + message);
+}
+
     // //update the active row indication
     // this.showActiveGuessField(this.guessingRowNumber);

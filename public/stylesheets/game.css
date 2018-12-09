@@ -29,6 +29,10 @@ body {
     background-color: cornflowerblue;
   }
 
+  #status{
+    overflow: auto;
+  }
+
   .playField{
     height: 100%;
     width: 50%;

@@ -98,7 +98,6 @@ game.prototype.evaluateGuess = function(guessedArray){
             }
         }
     }
-
     return returnedArray;
 }
 
