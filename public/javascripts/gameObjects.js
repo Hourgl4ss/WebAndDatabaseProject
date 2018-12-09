@@ -46,6 +46,8 @@ localGame.prototype.setModeGuesser = function(){
     });
 
     this.playerType = "GUESSER";
+
+    $("#youAre").append(" You are the " + this.playerType);
 }
 
 localGame.prototype.setModeCodemaker = function(){
@@ -58,6 +60,8 @@ localGame.prototype.setModeCodemaker = function(){
     });
 
     this.playerType = "CODEMAKER";
+
+    $("#youAre").append(" You are the " + this.playerType);
 }
 
 localGame.prototype.stopGame = function(){

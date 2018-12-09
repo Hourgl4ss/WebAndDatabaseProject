@@ -11,7 +11,6 @@ require("./routes/routes.js")(app);
 var server = http.createServer(app);
 const websocketServer = new websocket.Server({server});
 
-var websocketList = {};
 var gameList = [];
 var game = require("./game.js");
 
@@ -22,22 +21,23 @@ websocketServer.on("connection", function connection(ws){
 
     if(!currentlyWaiting){
 
-        //Initiate new game because noone is waiting for another player to join
+        //Initiate new game because no one is waiting for another player to join
         let currentGameInt = amtOfRunningGames;
         var tempGameName = new game(currentGameInt, false);
         tempGameName.addPlayer(ws, currentlyWaiting);
         gameList.push(tempGameName);
         currentlyWaiting = true;
+        amtOfRunningGames += 1;
 
         ws.send(JSON.stringify({messageType: "CODEMAKER"}));
 
     } else {
         //Make player join an already waiting player
-        let currentGameInt = amtOfRunningGames;
+        let currentGameInt = amtOfRunningGames - 1;
         var tempGameName = gameList[currentGameInt];
         tempGameName.addPlayer(ws, currentlyWaiting);
         
-        amtOfRunningGames += 1;
+        
         currentlyWaiting = false;
 
         ws.send(JSON.stringify({messageType: "GUESSER"}));
@@ -127,20 +127,36 @@ websocketServer.on("connection", function connection(ws){
 
       //@TODO ws.on("close")....
       ws.on("close", function(){
+
+          //If this is player one
           if(ws === tempGameName.player1){
-              if(tempGameName.player2 !== null){
-                  tempGameName.player2.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
-              } else {
+            if(tempGameName.player2 !== null){
+                try{
+                    tempGameName.player2.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
+                    currentlyWaiting = false;
+                } catch(exception){
+                    console.log("Something went wrong, games are now messed up. Assigning all connecting players to new game");
+                    console.log(exception);
+                    currentlyWaiting = false;
+                }
+            } else {
                 currentlyWaiting = false;
-              }
-              
+            }
+
+          //If this is player 2    
           } else if(ws === tempGameName.player2){
             if(tempGameName.player1 !== null){
-                currentlyWaiting = true;
-                tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
+                try {
+                    tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
+                    currentlyWaiting = true;
+                } catch(exception){
+                    console.log("Something went wrong, games are now messed up. Assigning all connecting players to new game");
+                    console.log(exception);
+                    currentlyWaiting = false;
+                }
             }
-          }
-      });
+        }
+    });
 });
 
 server.listen(port);
