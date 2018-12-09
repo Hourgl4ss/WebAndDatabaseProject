@@ -62,6 +62,9 @@ localGame.prototype.setModeCodemaker = function(){
     this.playerType = "CODEMAKER";
 
     $("#youAre").append(" You are the " + this.playerType);
+
+    $("#r"+row).css("background-color", "transparent");
+    $("#codeRow").css("background-color", "lightblue");
 }
 
 localGame.prototype.stopGame = function(){

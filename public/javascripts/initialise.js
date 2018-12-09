@@ -2,7 +2,7 @@ var socketConnection = new WebSocket("ws://localhost:3000");
 
 var localGame1 = new localGame();
 initialiseButtonActions(localGame1);
-localGame1.showActiveGuessField();
+//localGame1.showActiveGuessField();
 
 socketConnection.onopen = function(event){
 }
