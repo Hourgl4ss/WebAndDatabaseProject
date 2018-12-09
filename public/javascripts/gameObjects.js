@@ -22,7 +22,7 @@ localGame.prototype.nextRound = function(){
     this.guessingRowNumber -= 1;
     this.showActiveGuessField(this.guessingRowNumber);
 
-    if(this.playerType === "GUESSER") window.alert("incorrect");
+    if(this.playerType === "GUESSER") this.setStatusMessage("incorrect");
 
 }
 
@@ -33,7 +33,7 @@ localGame.prototype.showActiveGuessField = function(row){
 }
 
 localGame.prototype.askCode = function(){
-    window.alert("please enter the code in the top most row and hit submit!");
+    this.setStatusMessage("please enter the code in the top most row and hit submit!");
 }
 
 localGame.prototype.setModeGuesser = function(){
@@ -61,7 +61,7 @@ localGame.prototype.setModeCodemaker = function(){
 }
 
 localGame.prototype.stopGame = function(){
-    window.alert("Game ended");
+    this.setStatusMessage("Game ended");
 }
 
 localGame.prototype.updateView = function(guessedArray){
@@ -89,7 +89,10 @@ localGame.prototype.updateSmallCircles = function(correct, correctPlace){
 }
 
 localGame.prototype.setStatusMessage = function(message){
-    if(typeof message === 'string') $("#statusMessage").append("<br/>" + message);
+    if(typeof message === 'string') $("#statusMessage").append("<br/>----------<br/>" + message);
+
+    //Keep it scrolled to the bottom ( @TODO how to do this with jquery? )
+    document.getElementById("status").scrollTop = document.getElementById("status").scrollHeight
 }
 
     // //update the active row indication

@@ -84,21 +84,21 @@ var initialiseButtonActions = function(gameInstance){
                 //Send the data to the server
                 socketConnection.send(JSON.stringify({submitType: "CODE_GUESS", dataArray: tempColorsContainer}));
             } else {
-                window.alert("please fill in all the circles!");
+                gameInstance.setStatusMessage("please fill in all the circles!");
             }
             
 
         //Guesser guessed too early
         } else if(gameInstance.playerType === "GUESSER" && !gameInstance.codeSetAlready){
-            window.alert("Please wait for the codemaker to make a move");
+            gameInstance.setStatusMessage("Please wait for the codemaker to make a move");
 
         //Codemaker tried to submit another code
         } else if(gameInstance.playerType === "CODEMAKER" && gameInstance.codeSetAlready){
-            window.alert("You can only submit one code");
+            gameInstance.setStatusMessage("You can only submit one code");
 
         //Either the codemaker or guesser didn't fill all four circles before submitting
         } else if(!(gameInstance.filledCircleCounter >= 4)){
-            window.alert("Please fill in all four circles for the code");
+            gameInstance.setStatusMessage("Please fill in all four circles for the code");
 
         } 
     });

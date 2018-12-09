@@ -41,7 +41,7 @@ websocketServer.on("connection", function connection(ws){
         currentlyWaiting = false;
 
         ws.send(JSON.stringify({messageType: "GUESSER"}));
-        tempGameName.player1.send({messageType: "STATUS", statusUpdate: "PLAYER_JOINED"});
+        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_JOINED"}));
 
         //If mastercode has already been set
         if(tempGameName.masterCode.length !== 0){
@@ -129,14 +129,15 @@ websocketServer.on("connection", function connection(ws){
       ws.on("close", function(){
           if(ws === tempGameName.player1){
               if(tempGameName.player2 !== null){
-                  tempGameName.player2.send({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"});
+                  tempGameName.player2.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
               } else {
                 currentlyWaiting = false;
               }
               
           } else if(ws === tempGameName.player2){
             if(tempGameName.player1 !== null){
-                tempGameName.player1.send({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"});
+                currentlyWaiting = true;
+                tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
             }
           }
       });

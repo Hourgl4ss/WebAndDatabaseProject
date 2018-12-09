@@ -24,7 +24,7 @@ socketConnection.onmessage = function(event){
     //If guesser, make ready to guess and wait for codemaker to submit
     if(receivedMessage.messageType === "GUESSER"){
         localGame1.setModeGuesser();
-        window.alert("Please wait for the codemaker to submit their code")
+        localGame1.setStatusMessage("Please wait for the codemaker to submit their code")
     }
 
     //
@@ -39,10 +39,11 @@ socketConnection.onmessage = function(event){
             localGame1.codeSetAlready = true;
 
             //Alert the guessing player
-            if(localGame1.playerType === "GUESSER") window.alert("The codemaker submitted their code, start guessing now!");
+            if(localGame1.playerType === "GUESSER") localGame1.setStatusMessage("The codemaker submitted their code, start guessing now!");
 
             //Disables altering of the mastercode once it's been set on the server
             if(localGame1.playerType === "CODEMAKER"){
+                localGame1.setStatusMessage("Code was set, waiting for codebreaker to make a move")
                 $("#codeRow").children("input").each(function(){
                     $(this).prop("disabled", true);
                 });
@@ -72,7 +73,7 @@ socketConnection.onmessage = function(event){
         }
 
         else if(receivedMessage.statusUpdate === "PLAYER_DISCONNECT"){
-            window.alert("The other player disconnected");
+            localGame1.setStatusMessage("The other player disconnected");
             localGame1.stopGame();
         }
 
@@ -86,23 +87,23 @@ socketConnection.onmessage = function(event){
         //@TODO finish this expression
 
         if(receivedMessage.errorType === "BAD_MESSAGE"){
-            window.alert("Message sent to server was undecipherable, please try again");
+            localGame1.setStatusMessage("Message sent to server was undecipherable, please try again");
         }
 
         if(receivedMessage.errorType === "BAD_SUBMIT_NOT_ENOUGH"){
-            window.alert("Please fill in all four circles for the code");
+            localGame1.setStatusMessage("Please fill in all four circles for the code");
         }
 
         if(receivedMessage.errorType === "BAD_SUBMIT_OVERALL"){
-            window.alert("Please try to make an accurate guess");
+            localGame1.setStatusMessage("Please try to make an accurate guess");
         }
 
         if(receivedMessage.errorType === "SUBMIT_EARLY"){
-            window.alert("Please wait for the codemaker to make a move");
+            localGame1.setStatusMessage("Please wait for the codemaker to make a move");
         }
 
         if(receivedMessage.errorType === "ALREADY_SUBMITTED"){
-            window.alert("You can only enter one master code");
+            localGame1.setStatusMessage("You can only enter one master code");
         }
 
         localGame1.codeSetAlready = false;

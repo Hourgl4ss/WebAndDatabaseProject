@@ -31,6 +31,7 @@ body {
 
   #status{
     overflow: auto;
+    height: 60%;
   }
 
   .playField{
