@@ -72,5 +72,20 @@ localGame.prototype.updateView = function(guessedArray){
     });
 }
 
+localGame.prototype.updateSmallCircles = function(correct, correctPlace){
+    let x = correct,
+        y = correctPlace;
+
+    $("#r"+this.guessingRowNumber).children(".rightGuesses").children().each(function(){
+        if(x > 0){
+            $(this).css("background-color", "white");
+            x--;
+        } else if(y > 0){
+            $(this).css("background-color", "black");
+            y--;
+        }
+    });
+}
+
     // //update the active row indication
     // this.showActiveGuessField(this.guessingRowNumber);

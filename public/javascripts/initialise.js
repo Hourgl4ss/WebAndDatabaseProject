@@ -14,8 +14,6 @@ socketConnection.onmessage = function(event){
     let receivedMessage = JSON.parse(event.data);
     console.log(receivedMessage);
 
-    //localGame1.playerType = receivedMessage.messageType;
-
     //If codemaker, make code xd
     if(receivedMessage.messageType === "CODEMAKER") {
         localGame1.setModeCodemaker();
@@ -28,6 +26,7 @@ socketConnection.onmessage = function(event){
         window.alert("Please wait for the codemaker to submit their code")
     }
 
+    //
     if(receivedMessage.messageType === ""){
 
     }
@@ -54,13 +53,15 @@ socketConnection.onmessage = function(event){
             if(localGame1.playerType === "CODEMAKER") localGame1.updateView(receivedMessage.guessedArray);
 
             //end the game because the guesser won
-            localGame1.stopGame();
         }
 
         else if(receivedMessage.statusUpdate === "GUESS_INCORRECT"){
 
             //Update the view for the codemaker
             if(localGame1.playerType === "CODEMAKER") localGame1.updateView(receivedMessage.guessedArray);
+
+            //Update the amount of right guesses and right in the right place guesses for both players
+            localGame1.updateSmallCircles(receivedMessage.rightGuesses, receivedMessage.rightGuessRightPlace);
 
             //@TODO: implement showing how many were right and how many were right in the right place
             localGame1.nextRound();

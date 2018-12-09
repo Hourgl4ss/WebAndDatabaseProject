@@ -6,7 +6,6 @@ body {
     border: 0;
   }
 
-
   main {
     padding: 0%;
     margin: 0%;
@@ -60,6 +59,17 @@ body {
     width: auto;
     height: auto;
     background-color: gainsboro;
+  }
+
+  .rightGuesses{
+    display: inline-block;
+  }
+
+  .circleFeedback{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
   }
 
   a {

@@ -93,19 +93,23 @@ websocketServer.on("connection", function connection(ws){
 
                         tempGameName.endGameInstance();
 
-                    //If guess waasnt quite correct, move on to the next round
+                    //If guess wasnt quite correct, move on to the next round
                     } else {
                         tempGameName.nextRound();
 
-                        //something = evaluateGuess(dataReceived.dataArray);
+                        let evaluatedGuess = tempGameName.evaluateGuess(dataReceived.dataArray);
 
-                        //@TODO implement sending how many correct and or in the right place as well
-                        ws.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_INCORRECT"}));
+                        let sentMessage = {
+                            messageType: "STATUS", 
+                            statusUpdate: "GUESS_INCORRECT", 
+                            guessedArray: dataReceived.dataArray,
+                            rightGuesses: evaluatedGuess[0],
+                            rightGuessRightPlace: evaluatedGuess[1]
+                        }
 
-                        //also send to codemaker, including the guessed code so their game can update locally
-                        tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_INCORRECT", guessedArray: dataReceived.dataArray}));
-
-                        
+                        //Send the nessacary data to the clients
+                        ws.send(JSON.stringify(sentMessage));
+                        tempGameName.player1.send(JSON.stringify(sentMessage));
                     }
                 }
             }
@@ -118,6 +122,9 @@ websocketServer.on("connection", function connection(ws){
         }
         
       });
+
+
+      //@TODO ws.on("close")....
 });
 
 server.listen(port);

@@ -82,6 +82,26 @@ game.prototype.nextRound = function(){
 
 }
 
+/**
+ * Returns the amount of right guesses (plain) in returnedArray[0]
+ * Returns the smount of right guessed in the right place in returnedArray[1]
+ */
+game.prototype.evaluateGuess = function(guessedArray){
+    let returnedArray = [0, 0];
+
+    for(let i in guessedArray){
+        if(this.masterCode.includes(guessedArray[i])){
+            if(this.masterCode[i] === guessedArray[i]){
+                returnedArray[1] += 1;
+            } else {
+                returnedArray[0] += 1;
+            }
+        }
+    }
+
+    return returnedArray;
+}
+
 
 /** !!!!!!
  * This is code taken from the old game object on the client side app
