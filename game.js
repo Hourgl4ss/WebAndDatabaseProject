@@ -54,6 +54,8 @@ game.prototype.correctGuess = function(guessedCodeArray){
 }
 
 game.prototype.checkSubmission = function(submission){
+    if(submission.length < 4) return null; //not enough in the array means faulty submission
+
     for(let i in submission){
         switch(submission[i]){
             case "./images/red.png": break;

@@ -22,7 +22,7 @@ localGame.prototype.nextRound = function(){
     this.guessingRowNumber -= 1;
     this.showActiveGuessField(this.guessingRowNumber);
 
-    if(this.playerType === "GUESSER") this.setStatusMessage("incorrect");
+    if(this.playerType === "GUESSER") this.setStatusMessage("Incorrect for row " + (this.guessingRowNumber+1));
 
 }
 
@@ -63,7 +63,7 @@ localGame.prototype.setModeCodemaker = function(){
 
     $("#youAre").append(" You are the " + this.playerType);
 
-    $("#r"+row).css("background-color", "transparent");
+    $("#r"+this.guessingRowNumber).css("background-color", "transparent");
     $("#codeRow").css("background-color", "lightblue");
 }
 

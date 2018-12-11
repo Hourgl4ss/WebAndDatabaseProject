@@ -83,7 +83,7 @@ websocketServer.on("connection", function connection(ws){
             if(dataReceived.submitType === "CODE_GUESS" && tempGameName.player2 === ws){
 
                 //First check the validity of the move
-                if(tempGameName.checkSubmission(dataReceived.dataArray) !== null){
+                if((tempGameName.checkSubmission(dataReceived.dataArray) !== null)){
 
                     //If the guess was accurate
                     if(tempGameName.correctGuess(dataReceived.dataArray)){
@@ -112,6 +112,10 @@ websocketServer.on("connection", function connection(ws){
                         ws.send(JSON.stringify(sentMessage));
                         tempGameName.player1.send(JSON.stringify(sentMessage));
                     }
+
+                //Submission was faulty
+                } else if(dataReceived.dataArray.length < 4){
+                    ws.send(JSON.stringify({messageType: "ERROR", errorType: "BAD_SUBMIT_NOT_ENOUGH"}));
                 }
             }
 
