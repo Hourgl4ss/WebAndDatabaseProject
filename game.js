@@ -14,7 +14,7 @@ var game = function(gameId, allowDupes){
 
 //Returns true if the game is finished
 game.prototype.isGameFinished = function(){
-    return this.guessingRowNumber <= 0;
+    return this.guessingRowNumber < 0;
 }
 
 //Ends the game and returns players to the splash screen
@@ -27,9 +27,6 @@ game.prototype.endGameInstance = function(){
         console.log("\n----\t\nendGameInstance was called too early, players probably not connected yet\n----");
         console.log(exception)
     }
-
-
-    
 }
 
 game.prototype.addPlayer = function(playerSocketConnection, playerWaiting){

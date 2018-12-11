@@ -56,6 +56,8 @@ socketConnection.onmessage = function(event){
 
         else if(receivedMessage.statusUpdate === "GUESS_CORRECT"){
 
+            localGame1.setStatusMessage("The codebreaker won the game!");
+
             //Update the view for the codemaker
             if(localGame1.playerType === "CODEMAKER") localGame1.updateView(receivedMessage.guessedArray);
         }

@@ -10,7 +10,7 @@ body {
     padding: 0%;
     margin: 0%;
     border: 0;
-    background-color: gainsboro;
+    background-color: rgba(219, 219, 219, 0.541);
   }
 
   .playfieldContainer{
@@ -18,7 +18,7 @@ body {
     margin-left: 10%;
     width: 80%;
     display: inline-block;
-    background-color: gainsboro;
+    background-color: rgba(219, 219, 219, 0.541);
   }
 
   .scores{
@@ -39,13 +39,13 @@ body {
     width: 50%;
     float: left;
     display: inline-block;
-    background-color: rgb(136, 136, 136);
+    background-color: rgb(207, 207, 207);
   }
 
   .colorPicker{
-    width: 8%;
-    height: 90%;
-    margin-top: 10%;
+    width: 5%;
+    height: 70%;
+    margin-top: 30%;
     float: left;
     display: inline-block;
     background-color: grey;
@@ -55,7 +55,7 @@ body {
     width: 30%;
     height: 90%;
     display: inline-block;
-    background-color: gainsboro;
+    background-color: rgba(219, 219, 219, 0.541);
     position: absolute;
   }
 
@@ -63,7 +63,7 @@ body {
     margin-top: 5%;
     width: auto;
     height: auto;
-    background-color: gainsboro;
+    background-color: rgba(219, 219, 219, 0.541);
   }
 
   .rightGuesses{

@@ -92,6 +92,7 @@ websocketServer.on("connection", function connection(ws){
                         //also send to codemaker, including the guessed code so their game can update locally
                         tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "GUESS_CORRECT", guessedArray: dataReceived.dataArray}));
 
+
                         tempGameName.endGameInstance();
 
                     //If guess wasnt quite correct, move on to the next round
@@ -152,7 +153,7 @@ websocketServer.on("connection", function connection(ws){
             if(tempGameName.player1 !== null){
                 try {
                     tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
-                    currentlyWaiting = true;
+                    currentlyWaiting = false;
                 } catch(exception){
                     console.log("Something went wrong, games are now messed up. Assigning all connecting players to new game");
                     console.log(exception);
