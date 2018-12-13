@@ -1,17 +1,4 @@
-body {
-    padding: 0px;
-    margin: 0%;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    overflow: hidden; 
-    border: 0;
-  }
-
-  main {
-    padding: 0%;
-    margin: 0%;
-    border: 0;
-    background-color: rgba(219, 219, 219, 0.541);
-  }
+@import "./style.css";
 
   .playfieldContainer{
     height: 100%;

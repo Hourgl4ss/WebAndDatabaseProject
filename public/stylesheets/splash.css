@@ -1,0 +1,36 @@
+@import "./style.css";
+
+#headerImage{
+    width: auto;
+    height: auto;
+    margin-left: 5%;
+    padding: 0%;
+    margin: 2%;
+}
+
+#gameButtons{
+    width: 70%;
+    height: auto;
+    padding: 0%;
+    margin-left: 18%;
+    margin-top: 10%;
+    display: inline-block;
+}
+
+#playButton{
+    padding: 0%;
+    display: inline-block;
+    margin-right: 15%;
+    margin-left: 20%; 
+}
+
+#helpButton{
+    margin-bottom: 1%;
+}
+
+#statsButton{
+    position: fixed;
+    margin-right: 2%;
+    right: 0;
+    bottom: 0;
+}
