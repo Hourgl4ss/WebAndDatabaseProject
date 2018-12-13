@@ -28,7 +28,7 @@ localGame.prototype.nextRound = function(){
 
 //Show and update the currently active row of guessing circles -- visual only
 localGame.prototype.showActiveGuessField = function(row){
-    $("#r"+(row+1)).css("background-color", "rgb(136, 136, 136)");
+    $("#r"+(row+1)).css("background-color", "transparent");
     $("#r"+row).css("background-color", "lightblue");
 }
 

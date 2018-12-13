@@ -1,48 +1,46 @@
 @import "./style.css";
 
-  .playfieldContainer{
-    height: 100%;
-    margin-left: 10%;
-    width: 80%;
+  .playField, .scores, .colorPicker{
+    border: solid 3px grey;
+    margin: 0%;
+    padding: 0%;
+  }
+
+  input[type="image" i] {
+    cursor: default;
+  }
+
+  .playFieldContainer{
+    margin-left: 15%;
+    margin-top: 2%;
+    height: 90%;
     display: inline-block;
-    background-color: rgba(219, 219, 219, 0.541);
   }
 
   .scores{
-    height: 30%;
-    float: left;
-    width: 25%;
     display: inline-block;
-    background-color: cornflowerblue;
+    vertical-align: top;
   }
 
   #status{
     overflow: auto;
-    height: 60%;
   }
 
   .playField{
     height: 100%;
-    width: 50%;
-    float: left;
     display: inline-block;
-    background-color: rgb(207, 207, 207);
   }
 
   .colorPicker{
-    width: 5%;
-    height: 70%;
-    margin-top: 30%;
-    float: left;
+    vertical-align: bottom;
     display: inline-block;
-    background-color: grey;
   }
 
   .helpButtonContainer{
-    width: 30%;
-    height: 90%;
+    position: sticky;
+    right: 0;
+    margin: 2%;
     display: inline-block;
-    background-color: rgba(219, 219, 219, 0.541);
     position: absolute;
   }
 
@@ -50,7 +48,6 @@
     margin-top: 5%;
     width: auto;
     height: auto;
-    background-color: rgba(219, 219, 219, 0.541);
   }
 
   .rightGuesses{
@@ -64,7 +61,13 @@
     display: inline-block;
   }
 
-  a {
-    color: #00B7FF;
+  .pickerButton{
+    display: block;
+    margin: 5px;
   }
-  
+
+.midLayer{
+  padding: 10%;
+  padding-left: 20%; 
+  padding-bottom: 10%;
+}

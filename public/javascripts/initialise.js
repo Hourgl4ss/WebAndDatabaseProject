@@ -47,6 +47,9 @@ socketConnection.onmessage = function(event){
                 $("#codeRow").children("input").each(function(){
                     $(this).prop("disabled", true);
                 });
+
+                $("#r"+this.guessingRowNumber).css("background-color", "lightblue");
+                $("#codeRow").css("background-color", "transparent");
             };
         }
 

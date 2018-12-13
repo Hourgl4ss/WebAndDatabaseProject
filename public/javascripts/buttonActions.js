@@ -8,12 +8,12 @@ var initialiseButtonActions = function(gameInstance){
 
         //Update color if an actual color is selected
         if(!(this.id === "nocolor")){ 
-            $('body').css('cursor', 'url(./images/' +this.id+ '.png), auto');
+            $('*').css('cursor', 'url(./images/' +this.id+ '.png), auto');
             gameInstance.cursorState = this.id;
 
         //Return to default if nocolor was selected
         } else {
-            $('body').css('cursor', 'default');
+            $('*').css('cursor', 'default');
             gameInstance.cursorState = "default";
         } 
     });
