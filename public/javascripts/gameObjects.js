@@ -102,7 +102,10 @@ localGame.prototype.setStatusMessage = function(message){
 
     //Keep it scrolled to the bottom ( @TODO how to do this with jquery? )
     document.getElementById("status").scrollTop = document.getElementById("status").scrollHeight
-}
 
-    // //update the active row indication
-    // this.showActiveGuessField(this.guessingRowNumber);
+    //Visually notify
+    $("#status").css("background-color", "white");
+    setTimeout(function(){
+        $("#status").css("background-color", "transparent");
+    }, 500);
+}

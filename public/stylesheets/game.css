@@ -18,12 +18,15 @@
   }
 
   .scores{
+    height: 30%;
     display: inline-block;
     vertical-align: top;
   }
 
   #status{
-    overflow: auto;
+    height: 60%;
+    margin-top: 5%;
+    overflow-y: scroll;
   }
 
   .playField{
