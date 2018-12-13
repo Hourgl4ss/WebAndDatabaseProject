@@ -23,7 +23,7 @@ websocketServer.on("connection", function connection(ws){
 
         //Initiate new game because no one is waiting for another player to join
         let currentGameInt = amtOfRunningGames;
-        var tempGameName = new game(currentGameInt, false);
+        var tempGameName = new game(currentGameInt, true);
         tempGameName.addPlayer(ws, currentlyWaiting);
         gameList.push(tempGameName);
         currentlyWaiting = true;
@@ -135,29 +135,33 @@ websocketServer.on("connection", function connection(ws){
 
           //If this is player one
           if(ws === tempGameName.player1){
+            //reset indicator variables
+            tempGameName.player1 = null;
+
+            //notify potential other player
             if(tempGameName.player2 !== null){
                 try{
                     tempGameName.player2.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
-                    currentlyWaiting = false;
                 } catch(exception){
                     console.log("Something went wrong, games are now messed up. Assigning all connecting players to new game");
                     console.log(exception);
-                    currentlyWaiting = false;
                 }
             } else {
-                currentlyWaiting = false;
+                
             }
 
           //If this is player 2    
           } else if(ws === tempGameName.player2){
+            //reset indicator variables
+            tempGameName.player2 = null;
+
+            //Notify potential other player
             if(tempGameName.player1 !== null){
                 try {
                     tempGameName.player1.send(JSON.stringify({messageType: "STATUS", statusUpdate: "PLAYER_DISCONNECT"}));
-                    currentlyWaiting = false;
                 } catch(exception){
                     console.log("Something went wrong, games are now messed up. Assigning all connecting players to new game");
                     console.log(exception);
-                    currentlyWaiting = false;
                 }
             }
         }

@@ -68,6 +68,8 @@ localGame.prototype.setModeCodemaker = function(){
 }
 
 localGame.prototype.stopGame = function(){
+    if(this.guessingRowNumber < 0) this.setStatusMessage("The codemaker won!");
+
     this.setStatusMessage("Game ended");
 }
 

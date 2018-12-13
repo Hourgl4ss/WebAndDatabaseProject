@@ -27,11 +27,6 @@ socketConnection.onmessage = function(event){
         localGame1.setStatusMessage("Please wait for the codemaker to submit their code")
     }
 
-    //
-    if(receivedMessage.messageType === ""){
-
-    }
-
     //If an status update message is received
     if(receivedMessage.messageType === "STATUS"){
         
@@ -59,7 +54,7 @@ socketConnection.onmessage = function(event){
 
         else if(receivedMessage.statusUpdate === "GUESS_CORRECT"){
 
-            localGame1.setStatusMessage("The codebreaker won the game!");
+            localGame1.setStatusMessage("The guesser won the game!");
 
             //Update the view for the codemaker
             if(localGame1.playerType === "CODEMAKER") localGame1.updateView(receivedMessage.guessedArray);
