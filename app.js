@@ -17,6 +17,7 @@ var game = require("./game.js");
 var currentlyWaiting = false;
 var amtOfRunningGames = 0;
 
+//On new client socket connect
 websocketServer.on("connection", function connection(ws){
 
     if(!currentlyWaiting){
